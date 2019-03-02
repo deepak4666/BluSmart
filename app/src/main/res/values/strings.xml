@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">BluSmart</string>
+    <string name="loading_data_error">An Error Occurred While Loading Data!</string>
+    <string name="planned">PLANNED</string>
+    <string name="update_duty">Duty Update</string>
+    <string name="cancel">Cancel</string>
+    <string name="update">Update</string>
+    <string name="in_progress">IN_PROGRESS</string>
+    <string name="COMPLETED">COMPLETED</string>
+</resources>

@@ -1,0 +1,108 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion maxSDK
+    defaultConfig {
+        applicationId "com.example.blusmart"
+        minSdkVersion minSDK
+        targetSdkVersion maxSDK
+        versionCode 1
+        versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+
+        debug {
+            minifyEnabled false
+            buildConfigField 'String', 'BaseUrl', '"http://52.221.213.45:5000"'
+            buildConfigField 'String', 'privateString', '"bluPriv@8"'
+            debuggable true
+
+        }
+        release {
+            buildConfigField 'String', 'BaseUrl', '"http://52.221.213.45:5000"'
+            buildConfigField 'String', 'privateString', '"bluPriv@8"'
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+    }
+
+    flavorDimensions 'tier'
+    productFlavors {
+        prod {
+            minSdkVersion minSDK
+            applicationId 'com.example.blusmart'
+            targetSdkVersion maxSDK
+            versionCode 1
+            versionName "1.0"
+            versionNameSuffix '-prod'
+        }
+
+        dev {
+            minSdkVersion minSDK
+            applicationId 'com.example.blusmart'
+            targetSdkVersion maxSDK
+            versionCode 1
+            versionName "1.0"
+            versionNameSuffix '-dev'
+        }
+    }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "BluSmart-${variant.versionName}.apk"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+def rxJavaVersion = '2.2.7'
+def butterKnifeVersion = '10.0.0'
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation "androidx.fragment:fragment:1.1.0-alpha04"
+    implementation "androidx.cardview:cardview:1.0.0"
+    implementation "androidx.recyclerview:recyclerview:1.0.0"
+    implementation 'com.google.android.material:material:1.1.0-alpha04'
+    implementation 'com.google.guava:guava:27.0.1-android'
+//    Timeline
+    implementation 'com.github.po10cio:TimeLineView:1.0.2'
+
+//    Lifecycle
+    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+    implementation "android.arch.lifecycle:runtime:$lifecycle_version"
+    annotationProcessor "android.arch.lifecycle:compiler:$lifecycle_version"
+
+//    Retrofit2
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+
+//    RxJava2
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
+
+//    ButterKnife
+    implementation "com.jakewharton:butterknife:$butterKnifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
+
+//    Dagger2
+    implementation "com.google.dagger:dagger:$dagger2_version"
+    annotationProcessor "com.google.dagger:dagger-compiler:$dagger2_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger2_version"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger2_version"
+    compileOnly "org.glassfish:javax.annotation:3.1.1"
+
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.2-alpha01'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.2-alpha01'
+}
